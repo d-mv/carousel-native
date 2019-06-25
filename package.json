@@ -1,0 +1,41 @@
+{
+  "name": "carousel-native",
+  "version": "1.0.0",
+  "description": "Carousel component for React Native",
+  "keywords": [
+    "carousel",
+    "component",
+    "react",
+    "native",
+    "react-native",
+    "slide",
+    "gallery"
+  ],
+  "homepage": "https://github.com/d-mv/carousel-native",
+  "license": "ISC",
+  "author": {
+    "name": "Dmitry Melnikov",
+    "url": "https:/melnikov.dev"
+  },
+  "main": "index.js",
+  "repository": {"type": "git","url": "https://github.com/d-mv/carousel-native"},
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "react": "16.8.3",
+    "react-dom": "^16.8.6",
+    "react-native": "0.59.8",
+    "react-native-web": "^0.11.4"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.19",
+    "@types/react-native": "^0.57.60",
+    "babel-preset-expo": "^5.1.1",
+    "typescript": "^3.4.5"
+  },
+  "private": true
+}
