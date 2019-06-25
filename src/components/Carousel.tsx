@@ -30,6 +30,7 @@ export const Carousel = (props: CarouselProps) => {
 
   const onChangeImage = (event: any) => {
     const result = event.nativeEvent.contentOffset.x > prevPosition;
+    // check for non-fulfilled slidings
     if (result) {
       const next = photo + 1;
       const fake = next > length - 1;
@@ -41,41 +42,40 @@ export const Carousel = (props: CarouselProps) => {
     }
 
     setPrevPosition(event.nativeEvent.contentOffset.x);
-    console.log(result);
   };
 
   const circle = (active?: boolean) => (
     <View
       key={Math.random().toString()}
-      style={active ? [styles.circle, styles.circleShow] : styles.circle}
+      style={active ? [styles.circle, styles.current] : styles.circle}
     />
   );
 
   const slider = (
     <View style={styles.sliderContainer}>
       <View style={styles.slider}>
-        {Object.keys(props.photos).map((el: any) => {
-          return circle(el === photo.toString());
-        })}
+        {Object.keys(props.photos).map((el: any) =>
+          circle(el === photo.toString())
+        )}
       </View>
     </View>
   );
 
+  const imageComponent = (source: ImageSourcePropType) => (
+    <View key={Math.random()} style={styles.imageContainer}>
+      <Image source={source} style={styles.image} />
+    </View>
+  );
+
   return (
-    <View style={styles.componentContainer}>
+    <View style={styles.container}>
       <ScrollView
         horizontal={true}
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
         style={styles.scrollContainer}
         onMomentumScrollEnd={(event: any) => onChangeImage(event)}>
-        {props.photos.map((photo: any) => {
-          return (
-            <View key={Math.random()} style={styles.container}>
-              <Image source={photo.source} style={styles.image} />
-            </View>
-          );
-        })}
+        {props.photos.map((photo: any) => imageComponent(photo.source))}
       </ScrollView>
       {slider}
     </View>
@@ -83,40 +83,13 @@ export const Carousel = (props: CarouselProps) => {
 };
 
 const styles = StyleSheet.create({
-  circle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: "white",
-    marginHorizontal: 10
-  },
-  circleShow: {
-    width: 12,
-    height: 12,
-    borderRadius: 6
-  },
-  slider: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  sliderContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "90%",
-    bottom: 15
-  },
-
-  item: { backgroundColor: "red" },
+  container: { flex: 1 },
   scrollContainer: {
     flex: 1,
     width: Dimensions.get("window").width,
-    height: 200,
-    backgroundColor: "red"
+    height: 200
   },
-  componentContainer: { flex: 1, backgroundColor: "red" },
-  container: {
+  imageContainer: {
     flex: 1,
     width: Dimensions.get("window").width
   },
@@ -127,8 +100,28 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined
   },
-  scroll: {
-    backgroundColor: "rgba(0,0,0,0)",
-    height: 500
+  circle: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "white",
+    marginHorizontal: 10
+  },
+  current: {
+    width: 12,
+    height: 12,
+    borderRadius: 6
+  },
+  sliderContainer: {
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "90%",
+    bottom: 15
+  },
+  slider: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
